@@ -44,6 +44,10 @@ if not errorlevel 1 (
     exit /b 1
 )
 
+echo.
+echo Model configured successfully! Starting assistant...
+echo.
+
 REM Run the assistant with error handling
 python main.py
 if errorlevel 1 (
