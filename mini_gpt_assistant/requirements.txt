@@ -1,0 +1,24 @@
+# Core AI/ML dependencies with CUDA support
+torch==2.1.2+cu118
+torchvision==0.16.2+cu118
+torchaudio==2.1.2+cu118
+transformers==4.36.2
+datasets==2.16.1
+tokenizers==0.15.0
+huggingface-hub==0.20.2
+
+# Accelerate for better GPU performance
+accelerate==0.25.0
+
+# Utility dependencies
+requests==2.31.0
+tqdm==4.66.1
+numpy==1.24.4
+regex==2023.12.25
+
+# Additional utilities
+colorama==0.4.6
+python-dateutil==2.8.2
+
+# Optional: for advanced GPU monitoring
+nvidia-ml-py3==7.352.0
