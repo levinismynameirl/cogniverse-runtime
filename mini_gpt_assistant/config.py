@@ -3,7 +3,7 @@ Configuration settings for the Mini GPT Assistant.
 """
 
 # Model Configuration - UPGRADED TO LARGER MODEL
-MODEL_NAME = "microsoft/DialoGPT-medium"  # Much better for conversations
+MODEL_NAME = "PLACEHOLDER"  # Much better for conversations
 # Alternative options:
 # MODEL_NAME = "facebook/opt-350m"        # Good general model
 # MODEL_NAME = "gpt2-medium"              # Larger GPT-2 variant
