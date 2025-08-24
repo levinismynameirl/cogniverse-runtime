@@ -37,7 +37,7 @@ The official runtime environment for the Cogniverse AI marketplace. This lightwe
 ### Simple 3-Step Setup
 
 1. **Download and Extract**:
-   - Download the Cogniverse Runtime
+   - Download the latest Cogniverse runtime release.
    - Extract to your preferred location (e.g., `C:\cogniverse-runtime`)
 
 2. **Run Setup**:
