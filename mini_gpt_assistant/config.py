@@ -2,12 +2,12 @@
 Configuration settings for the Mini GPT Assistant.
 """
 
-# Model Configuration - UPGRADED TO LARGER MODEL
-MODEL_NAME = "PLACEHOLDER"  # Much better for conversations
+# Model Configuration - CHANGE THIS TO YOUR PREFERRED MODEL
+MODEL_NAME = "distilgpt2"  # Good default for beginners
 # Alternative options:
+# MODEL_NAME = "gpt2"                     # Standard GPT-2 model
+# MODEL_NAME = "microsoft/DialoGPT-medium"  # Good for conversations
 # MODEL_NAME = "facebook/opt-350m"        # Good general model
-# MODEL_NAME = "gpt2-medium"              # Larger GPT-2 variant
-# MODEL_NAME = "microsoft/DialoGPT-large" # Even better but needs more VRAM
 
 # Generation Parameters - IMPROVED FOR BETTER RESPONSES
 MAX_LENGTH = 150

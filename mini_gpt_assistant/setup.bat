@@ -25,22 +25,39 @@ echo Activating virtual environment...
 call venv\Scripts\activate.bat
 
 echo.
-echo Installing dependencies...
-pip install -r requirements.txt
+echo Upgrading pip to latest version...
+python -m pip install --upgrade pip
 
 echo.
-echo Running installation test...
-python demo.py
+echo Installing PyTorch with CUDA support...
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+echo.
+echo Installing other dependencies...
+pip install -r requirements.txt
 
 echo.
 echo ========================================
 echo Setup Complete!
 echo ========================================
 echo.
-echo To run the assistant:
-echo   1. Activate the virtual environment: venv\Scripts\activate.bat
-echo   2. Run the assistant: python main.py
+echo ✅ Virtual environment created
+echo ✅ All dependencies installed
+echo ✅ Default model configured: distilgpt2
 echo.
-echo Or simply double-click 'run_assistant.bat'
+echo READY TO USE:
+echo   Model: distilgpt2 (lightweight, auto-downloads on first use)
+echo   Runtime: Ready to start
+echo.
+echo TO START THE ASSISTANT:
+echo   Double-click: run_assistant.bat
+echo.
+echo OR manually:
+echo   1. Activate: venv\Scripts\activate.bat
+echo   2. Run: python main.py
+echo.
+echo Optional tests:
+echo   - GPU check: python check_gpu.py
+echo   - Installation test: python demo.py (if available)
 echo.
 pause

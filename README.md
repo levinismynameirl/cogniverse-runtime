@@ -15,6 +15,8 @@ The official runtime environment for the Cogniverse AI marketplace. This lightwe
 - **Conversation History**: Maintains context across sessions
 - **Logging**: Full interaction logging for debugging and analysis
 - **Windows Optimized**: Built specifically for Windows PowerShell environments
+- **GPU Diagnostics**: Built-in tools to check GPU compatibility and performance
+- **Installation Testing**: Automated testing to verify setup is working correctly
 
 ### 🔮 Coming Soon
 
@@ -28,16 +30,16 @@ The official runtime environment for the Cogniverse AI marketplace. This lightwe
 
 - **OS**: Windows 10/11 
 - **Python**: 3.11 or higher
-- **RAM**: 10GB minimum availbale (24GB+ recommended for larger models)
+- **RAM**: 10GB minimum available (24GB+ recommended for larger models)
 - **Storage**: 2-10GB depending on model size
-- **GPU**: Depends on AI model but most require at least 4gb of VRAM
+- **GPU**: Optional but recommended - 4GB+ VRAM for GPU acceleration
 
 ## 🛠️ Installation
 
 ### Simple 3-Step Setup
 
 1. **Download and Extract**:
-   - Download the latest Cogniverse runtime release.
+   - Download the Cogniverse Runtime
    - Extract to your preferred location (e.g., `C:\cogniverse-runtime`)
 
 2. **Run Setup**:
@@ -46,93 +48,168 @@ The official runtime environment for the Cogniverse AI marketplace. This lightwe
    ```
    This will automatically:
    - Create Python virtual environment
+   - Upgrade pip to latest version
    - Install all required dependencies
    - Set up the runtime environment
+   - Configure distilgpt2 as the default model
 
 3. **Launch the Assistant**:
    ```
    Double-click run_assistant.bat
    ```
 
-That's it! The runtime will download a default model on first launch.
+That's it! The runtime comes pre-configured with distilgpt2 and will auto-download the model on first use.
+
+## 🧪 Diagnostic and Testing Tools
+
+### Demo Script (`demo.py`)
+Tests your installation and creates sample data:
+
+```bash
+python demo.py
+```
+
+**What it does:**
+- ✅ Tests all package imports (PyTorch, Transformers, etc.)
+- ✅ Verifies configuration loading
+- ✅ Creates sample training data in `data/` folder
+- ✅ Tests model availability and download
+- ✅ Provides troubleshooting information
+
+**When to use:**
+- After initial setup to verify everything works
+- Before starting the assistant for the first time
+- When troubleshooting installation issues
+
+### GPU Diagnostic (`check_gpu.py`)
+Comprehensive GPU compatibility and performance check:
+
+```bash
+python check_gpu.py
+```
+
+**What it reports:**
+- 🔍 CUDA availability and version
+- 🔍 GPU device information and memory
+- 🔍 PyTorch GPU support status
+- 🔍 Memory allocation testing
+- 🔍 NVIDIA driver status via `nvidia-smi`
+
+**Sample output:**
+```
+🔍 GPU Diagnostic Check
+==================================================
+PyTorch version: 2.7.1+cu118
+CUDA available: True
+CUDA version: 11.8
+Number of GPUs: 1
+GPU 0: NVIDIA GeForce RTX 3080 (10.0GB)
+✅ GPU memory allocation test passed
+```
+
+**When to use:**
+- When experiencing GPU-related errors
+- To check if GPU acceleration is properly configured
+- Before running large models that require significant VRAM
+- When deciding between CPU and GPU modes
+
+### Quick Troubleshooting Workflow
+
+1. **Installation Issues**: Run `python demo.py`
+2. **GPU Problems**: Run `python check_gpu.py`  
+3. **Model Errors**: Check the error-specific guidance in `run_assistant.bat`
+4. **Still Having Issues**: Check `logs/assistant.log` for detailed errors
 
 ## 🎯 Using Different Models
 
-### Easy Model Setup (3 Steps)
+### Default Setup (Pre-configured)
 
-1. **Create a models folder**:
-   - Go to the `mini_gpt_assistant` folder
-   - Create a new folder called `models` (case sensitive)
+The runtime comes **pre-configured** with `distilgpt2`, a lightweight and fast model perfect for beginners:
 
-2. **Download and place your model**:
-   - Download from Hugging Face, OpenAI, Facebook, etc.
-   - Put the model files in the `models` folder you just created
+- **Model**: `distilgpt2` (82M parameters, ~250MB)
+- **Auto-download**: Downloads automatically on first use
+- **Performance**: Fast responses, low memory usage
+- **Perfect for**: First-time users, testing, lightweight conversations
 
-3. **Update the config (REQUIRED)**:
-   - Double-click `config.py` to open it in Notepad
-   - Find the line `MODEL_NAME = "PLACEHOLDER"`
-   - Change "PLACEHOLDER" to your exact model name (case sensitive)
-   - Save and close
+### Easy Model Switching (4 Steps)
 
-   **Example**: Change `MODEL_NAME = "PLACEHOLDER"` to `MODEL_NAME = "distilgpt2"`
+Want to use a different model? Here's how:
+
+1. **Choose your model approach**:
+   - **Automatic download** (recommended): Use model names like `"gpt2"`
+   - **Manual download**: Download files and place in `models/` folder
+
+2. **For automatic download** (easiest):
+   - Open `config.py` in Notepad
+   - Change `MODEL_NAME = "distilgpt2"` to `MODEL_NAME = "gpt2"`
+   - Save and run the assistant
+
+3. **For manual download**:
+   - Create a `models` folder in `mini_gpt_assistant` directory
+   - Download model files and place them in `models/your_model_name/`
+   - Update `config.py`: `MODEL_NAME = "models/your_model_name"`
 
 4. **Run the assistant**:
    ```
    Double-click run_assistant.bat
    ```
 
-### Popular Model Examples
+### Recommended Models
 
-#### Hugging Face Models
+#### Ready to Use (Auto-download)
 ```python
-# Edit config.py
-MODEL_NAME = "distilgpt2"              # Lightweight, fast
-MODEL_NAME = "gpt2"                    # Standard GPT-2
-MODEL_NAME = "microsoft/DialoGPT-medium"  # Conversation-focused
-MODEL_NAME = "facebook/opt-125m"       # Facebook's OPT model
+# Edit config.py - these will auto-download on first use
+MODEL_NAME = "distilgpt2"              # Default - Lightweight, fast (250MB)
+MODEL_NAME = "gpt2"                    # Standard GPT-2 (500MB)
+MODEL_NAME = "microsoft/DialoGPT-medium"  # Conversation-focused (350MB)
 ```
 
-#### Local Models (Downloaded from Future Marketplace)
+#### Popular Model Examples
 ```python
-# Place model files in models/ folder and reference them:
-MODEL_NAME = "models/cogniverse-advanced-chat-v1"
-MODEL_NAME = "models/specialized-coding-assistant"
+# Lightweight models (good for limited hardware)
+MODEL_NAME = "distilgpt2"              # 82M parameters, ~250MB - DEFAULT
+MODEL_NAME = "gpt2"                    # 124M parameters, ~500MB
+
+# Conversation models
+MODEL_NAME = "microsoft/DialoGPT-medium"  # 117M parameters, optimized for chat
+MODEL_NAME = "microsoft/DialoGPT-large"   # 345M parameters, better responses
+
+# More capable models (require more resources)
+MODEL_NAME = "gpt2-medium"             # 345M parameters, ~1.5GB
+MODEL_NAME = "facebook/opt-350m"       # Facebook's OPT model
 ```
 
 ### Model Setup Process
 
 **Quick Setup with Bat Files:**
 
-1. **Download a Model** from Hugging Face or other sources
-2. **Create models folder** in `mini_gpt_assistant` directory (if it doesn't exist)
-3. **Place model files** in the models folder
-4. **Edit config.py** - open with Notepad and change `MODEL_NAME` to your model
-5. **Double-click run_assistant.bat** to start
+1. **Test your setup** with `python demo.py` (optional)
+2. **Check GPU** (optional) with `python check_gpu.py`
+3. **Edit config.py** if you want a different model - open with Notepad and change `MODEL_NAME = "distilgpt2"` to your chosen model
+4. **Double-click run_assistant.bat** to start
 
-**Example:**
-- Download `gpt2` model files
-- Create `models` folder 
-- Put files in `models/gpt2/`
-- Change config.py: `MODEL_NAME = "models/gpt2"`
-- Double-click `run_assistant.bat`
+**Example for beginners (already done by default):**
+- The runtime is pre-configured with `distilgpt2`
+- Just double-click `run_assistant.bat` to start!
+- The model will auto-download on first use
 
 ## ⚙️ Configuration Options
 
 Edit `config.py` to customize your experience:
 
 ```python
-# Model Configuration
-MODEL_NAME = "distilgpt2"           # Your chosen model
-USE_GPU = False                     # Set to True for GPU acceleration
+# Model Configuration - PRE-CONFIGURED
+MODEL_NAME = "distilgpt2"           # Default model (already set!)
 
-# Conversation Settings
+# Performance Settings
+USE_GPU = True                      # Set to False if no GPU or having issues
 MAX_LENGTH = 150                    # Response length
 TEMPERATURE = 0.7                   # Creativity (0.1-1.0)
-MAX_CONVERSATION_HISTORY = 10       # Memory depth
 
 # Features
-ALLOW_INTERNET = False              # Enable web search
+ALLOW_INTERNET = True               # Enable web search
 ENABLE_LOGGING = True               # Log conversations
+MAX_CONVERSATION_HISTORY = 5        # Memory depth
 ```
 
 ## 🚀 Quick Start Guide
@@ -141,14 +218,12 @@ ENABLE_LOGGING = True               # Log conversations
 
 1. **Double-click setup.bat** - This installs everything automatically
 
-2. **IMPORTANT: Configure your model**:
-   - Open `config.py` in Notepad
-   - Change `MODEL_NAME = "PLACEHOLDER"` to `MODEL_NAME = "distilgpt2"` 
-   - Save the file
+2. **Launch the assistant**:
+   ```
+   Double-click run_assistant.bat
+   ```
 
-3. **Double-click run_assistant.bat** - This launches the assistant
-
-4. **Start chatting**:
+3. **Start chatting**:
    ```
    🤖 Cogniverse Runtime Assistant
    ============================================
@@ -159,7 +234,7 @@ ENABLE_LOGGING = True               # Log conversations
    Assistant: Hi! I'm your AI assistant running on the Cogniverse runtime...
    ```
 
-**That's it!** No PowerShell commands needed - just double-click the bat files.
+**That's it!** No configuration needed - distilgpt2 is pre-configured and ready to go.
 
 ### Available Commands
 
@@ -171,51 +246,69 @@ ENABLE_LOGGING = True               # Log conversations
 
 ## 🔧 Troubleshooting
 
-### No Model Detected Error
+### Step-by-Step Troubleshooting
 
-If you see "ERROR: No model configured!" or something similar, follow these simple steps:
+1. **First, run diagnostics**:
+   ```bash
+   python demo.py        # Tests everything
+   python check_gpu.py   # If you have GPU issues
+   ```
 
-1. **Create models folder**:
-   - Go to `mini_gpt_assistant` folder
-   - Create a new folder called `models`
+2. **Check the specific error** in `run_assistant.bat` output
 
-2. **Download a model** from Hugging Face:
-   - Recommended: `distilgpt2` (lightweight)
-   - Alternative: `gpt2` (more capable)  
-   - Conversational: `microsoft/DialoGPT-medium`
+3. **Review detailed logs** in `logs/assistant.log`
 
-3. **Update config.py**:
-   - Double-click `config.py` to open in Notepad
-   - Change: `MODEL_NAME = "PLACEHOLDER"`
-   - To: `MODEL_NAME = "distilgpt2"` (or your chosen model)
-   - Save the file
+### Common Issues and Solutions
 
-4. **Restart the assistant**:
-   - Double-click `run_assistant.bat`
+#### Model Download Issues
+**Problem**: First-time download fails or is slow
 
-### Common Issues
-
-#### Memory Errors
-- Use smaller models like `distilgpt2`
-- Set `USE_GPU = False` in config.py
-- Close other applications to free RAM
-
-#### Download Failures
+**Solutions**:
 - Check internet connection
-- Try a different model
-- Clear cache: `rm -r $env:USERPROFILE\.cache\huggingface`
+- Wait for download to complete (distilgpt2 is ~250MB)
+- Try again - Hugging Face servers can be busy
+- Model files are cached in `%USERPROFILE%\.cache\huggingface`
 
-#### Permission Errors
-- Run PowerShell as Administrator
-- Set execution policy: `Set-ExecutionPolicy RemoteSigned`
+#### Memory/GPU Errors
+**Problem**: Not enough VRAM or system RAM
+
+**Solutions**:
+- Default distilgpt2 should work on most systems
+- Disable GPU: Set `USE_GPU = False` in config.py
+- Close other applications
+- Run `python check_gpu.py` to diagnose GPU issues
+
+#### Import/Dependency Errors
+**Problem**: Missing packages or environment issues
+
+**Solutions**:
+- Rerun setup: `setup.bat`
+- Reinstall dependencies: `pip install -r requirements.txt`
+- Check Python version: `python --version` (needs 3.11+)
+- Run `python demo.py` to identify specific missing packages
+
+#### GPU Not Detected
+**Problem**: GPU available but not being used
+
+**Solutions**:
+- Run `python check_gpu.py` for detailed GPU diagnosis
+- Install CUDA-enabled PyTorch: 
+  ```bash
+  pip uninstall torch torchvision torchaudio
+  pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+  ```
+- Update NVIDIA drivers
+- Set `USE_GPU = False` in config.py to use CPU
 
 ## 📂 Project Structure
 
 ```
 cogniverse-runtime/
 ├── mini_gpt_assistant/
-│   ├── config.py                 # Configuration settings
+│   ├── config.py                 # Configuration settings ⚙️
 │   ├── main.py                   # Main runtime application
+│   ├── demo.py                   # Installation testing script 🧪
+│   ├── check_gpu.py              # GPU diagnostic tool 🔍
 │   ├── requirements.txt          # Dependencies
 │   ├── setup.bat                 # Setup script
 │   ├── run_assistant.bat         # Launch script
@@ -224,6 +317,7 @@ cogniverse-runtime/
 │   │   └── websearch.py          # Web search functionality
 │   ├── logs/
 │   │   └── assistant.log         # Conversation logs
+│   ├── data/                     # Training data (created by demo.py)
 │   └── models/                   # Local models (create when needed)
 └── README.md                     # This file
 ```
@@ -235,6 +329,9 @@ cogniverse-runtime/
 - ✅ Hugging Face model support
 - ✅ Local execution and privacy
 - ✅ Easy configuration and setup
+- ✅ Built-in diagnostics and testing
+- ✅ GPU acceleration support
+- ✅ Pre-configured with distilgpt2
 
 ### Coming Soon: Full Marketplace
 - 🔄 Official Cogniverse marketplace launch
@@ -257,11 +354,12 @@ The Cogniverse platform aims to democratize AI by making advanced models accessi
 
 ## 🤝 Community & Support
 
-### Getting Help
-1. Check the troubleshooting section above
-2. Review logs in `logs/assistant.log`
-3. Ensure your Python version is 3.11+
-4. Verify model configuration in `config.py`
+### Getting Help (Follow This Order)
+1. **Run diagnostics**: `python demo.py` and `python check_gpu.py`
+2. **Check troubleshooting section** above for your specific error
+3. **Review logs** in `logs/assistant.log` for detailed error information
+4. **Verify requirements**: Python 3.11+, sufficient RAM/storage
+5. **Try the default**: Make sure `MODEL_NAME = "distilgpt2"` in config.py
 
 ### Contributing
 - Report bugs and suggest features
@@ -285,3 +383,11 @@ This project is provided under an open-source license for the runtime environmen
 
 **Ready to explore the future of AI?** 🚀  
 *Your gateway to the Cogniverse ecosystem starts here.*
+
+**Quick Start Checklist:**
+- [ ] Run `setup.bat`
+- [ ] Run `python demo.py` (optional but recommended)
+- [ ] Run `run_assistant.bat` (distilgpt2 is already configured!)
+- [ ] Start chatting!
+
+**No configuration needed - distilgpt2 comes pre-configured and ready to use!**
