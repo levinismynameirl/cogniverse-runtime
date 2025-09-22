@@ -1,6 +1,6 @@
 """
-Quick start script for Mini GPT Assistant.
-This script provides an easy way to launch the assistant with proper error handling.
+Old start script for Mini GPT Assistant. Run run_assitant.bat instead.
+This script requires manual activation of the virtual environment.
 """
 
 import os

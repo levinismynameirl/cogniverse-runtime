@@ -19,6 +19,7 @@ from colorama import Fore, Back, Style
 
 import config
 from tools.websearch import WebSearchTool
+# from config.py import MODEL_NAME, USE_GPU, GPU_DEVICE, TORCH_DTYPE, ALLOW_INTERNET
 
 
 class MiniGPTAssistant:

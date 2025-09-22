@@ -16,6 +16,17 @@ if errorlevel 1 (
     pause
     exit /b 1
 )
+echo ✅ Python is installed
+python --version
+
+echo Creating models folder...
+if not exist "models" (
+    mkdir models
+    echo ✅ Created models folder
+) else (
+    echo Models folder already exists
+)
+echo.
 
 echo Creating virtual environment...
 python -m venv venv
@@ -27,6 +38,7 @@ call venv\Scripts\activate.bat
 echo.
 echo Upgrading pip to latest version...
 python -m pip install --upgrade pip
+
 
 echo.
 echo Installing PyTorch with CUDA support...
